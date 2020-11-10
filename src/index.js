@@ -1,17 +1,38 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import * as serviceWorker from './serviceWorker';
 
-ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
-);
+import Header from './components/Header';
+import Footer from './components/Footer';
+import FaqMain from "./components/FaqMain";
 
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
-serviceWorker.unregister();
+import '../dist/base.css';
+import AboutUsMain from "./components/AboutUsMain";
+if (window.location.href === 'http://localhost:8080/aboutus.html') {
+    ReactDOM.render(<div>
+            <Header/>
+            <AboutUsMain/>
+            <Footer/>
+        </div>,
+        document.getElementById('root'));
+} else {
+    ReactDOM.render(<div>
+            <Header/>
+            <FaqMain/>
+            <Footer/>
+        </div>,
+        document.getElementById('root'));
+}
+let coll = document.getElementsByClassName('collapse');
+for (let i = 0; i < coll.length; i++) {
+    coll[i].addEventListener('click', function () {
+        this.classList.toggle('active');
+        let content = this.nextElementSibling;
+        if (content.style.maxHeight) {
+            content.style.maxHeight = null;
+        } else {
+            content.style.maxHeight = '500px';
+        }
+        this.childNodes[1].classList.toggle('active');
+        this.childNodes[2].classList.toggle('active');
+    });
+}
